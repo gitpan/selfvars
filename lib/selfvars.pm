@@ -7,7 +7,7 @@ use Exporter ();
 BEGIN {
     @ISA     = 'Exporter';
     @EXPORT  = qw( $self @args );
-    $VERSION = '0.02';
+    $VERSION = '0.03';
 }
 
 package selfvars::self;
@@ -57,18 +57,52 @@ sub _args {
 
 sub TIEARRAY  { my $x; bless \$x => $_[0] }
 sub FETCHSIZE { scalar $#{ _args() } }
-sub STORESIZE { $#{ _args() } = $_[1] + 1 }
+sub STORESIZE {
+    require Carp;
+    Carp::croak('Modification of a read-only @args attempted');
+    $#{ _args() } = $_[1] + 1;
+}
 sub STORE     { _args()->[ $_[1] + 1 ] = $_[2] }
 sub FETCH     { _args()->[ $_[1] + 1 ] }
-sub CLEAR     { $#{ _args() } = 0 }
-sub POP       { my $o = _args(); (@$o > 1) ? pop(@$o) : undef }
-sub PUSH      { my $o = _args(); push( @$o, @_ ) }
-sub SHIFT     { splice( @{ _args() }, 1, 1 ) }
-sub UNSHIFT   { my $o = _args(); unshift( @$o, @_ ) }
-sub EXISTS    { my $o = _args(); exists $o->[ $_[1] + 1 ] }
-sub DELETE    { my $o = _args(); delete $o->[ $_[1] + 1 ] }
+sub CLEAR     {
+    require Carp;
+    Carp::croak('Modification of a read-only @args attempted');
+    $#{ _args() } = 0
+}
+sub POP       {
+    require Carp;
+    Carp::croak('Modification of a read-only @args attempted');
+    my $o = _args(); (@$o > 1) ? pop(@$o) : undef
+}
+sub PUSH      {
+    require Carp;
+    Carp::croak('Modification of a read-only @args attempted');
+    my $o = _args(); push( @$o, @_ )
+}
+sub SHIFT     {
+    require Carp;
+    Carp::croak('Modification of a read-only @args attempted');
+    my $o = _args(); splice( @$o, 1, 1 )
+}
+sub UNSHIFT   {
+    require Carp;
+    Carp::croak('Modification of a read-only @args attempted');
+    my $o = _args(); unshift( @$o, @_ )
+}
+sub EXISTS    {
+    require Carp;
+    Carp::croak('Modification of a read-only @args attempted');
+    my $o = _args(); exists $o->[ $_[1] + 1 ]
+}
+sub DELETE    {
+    require Carp;
+    Carp::croak('Modification of a read-only @args attempted');
+    my $o = _args(); delete $o->[ $_[1] + 1 ]
+}
 
 sub SPLICE {
+    require Carp;
+    Carp::croak('Modification of a read-only @args attempted');
     my $ob  = shift;
     my $sz  = $ob->FETCHSIZE;
     my $off = @_ ? shift : 0;
@@ -123,9 +157,16 @@ They are really just handy helpers to get rid of:
     my $self = shift;
 
 Behind the scenes, C<$self> is simply tied to C<$_[0]>, and C<@args> to
-C<@_[1..$#_]>.
+C<@_[1..$#_]>.  Note that they are variables, not barewords.
 
-Note that they are variables, not barewords.
+Currently, both C<$self> and C<@args> are read-only; this means you cannot
+mutate them:
+
+    $self = 'foo';              # error
+    my $foo = shift @args;      # error
+
+This restriction may be lifted at a later version of this module, or turned
+into a configurable option instead.
 
 =head1 INTERFACE
 

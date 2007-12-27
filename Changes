@@ -1,3 +1,9 @@
+[Changes for 0.03 - 2007-12-28]
+
+* Documented that $self and @args are read-only variables for now.
+
+* @args is made truly read-only.
+
 [Changes for 0.02 - 2007-12-28]
 
 * Fix support for Perl 5.005 and 5.004.
