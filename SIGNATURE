@@ -14,9 +14,9 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 13a54cc6b7ee06f929ef9dd3d80e0a619175fdfd Changes
+SHA1 fa6c38ee8eb534af8ed282a068f9deb7d8b86577 Changes
 SHA1 1fb02c84d79d3ed1f053ebd423a2b0e9cc47feec MANIFEST
-SHA1 040442c696d7d4ab7bb6ec93fb351874ffd11d0e META.yml
+SHA1 e8e0bf551071f00eac48b5ff42b05a8efe3ecb63 META.yml
 SHA1 694587dac73dda066bc81b5a61e01705b6bd3ceb Makefile.PL
 SHA1 456a85ce075dfacd6163d24feafb5bc8f49b60e5 README
 SHA1 7e2cfa1b9efe0d502ee57717649c90ba4bd28ba9 inc/Module/Install.pm
@@ -32,7 +32,7 @@ SHA1 fb711fed1e4269f7569da5d09980648acf47a750 inc/Test/Builder.pm
 SHA1 028954a5cb377df3f660a7ade8631c265df026cc inc/Test/Builder/Module.pm
 SHA1 0781d008b60551d1bd74d56bf065861f4d84cf9d inc/Test/More.pm
 SHA1 f8e70396a1f3e0b34668d08871d7519321995283 inc/attributes.pm
-SHA1 f47c3a21d8d0b39a98bd26ad89ee168e51f618d4 lib/selfvars.pm
+SHA1 fcc3e715279e3395a72010e87b7d2272d944a99b lib/selfvars.pm
 SHA1 0a009773bc5c2f8f81dcbb1c8bcf2cca9f6152d3 t/00.load.t
 SHA1 dd50bad5324e0b5b4806dbc804c444dbc37c6b6a t/02.eval.t
 SHA1 cc6a5219783ccb4a4c90d91474914f83cdf342f8 t/03.interpolation.t
@@ -46,7 +46,7 @@ SHA1 0190346d7072d458c8a10a45c19f86db641dcc48 t/pod.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.3 (Darwin)
 
-iD8DBQFHc5bZtLPdNzw1AaARAppaAJoDGSbV0K1pitqE5/oq1f0CDtyLpgCfRCjw
-tVnb5KAvkDsc35zt/fXHXno=
-=npCm
+iD8DBQFHc88ftLPdNzw1AaARAm4JAJ4tP8mELfqLH4E8UfJbZ1rYlZFGtACePlgZ
+U8uf6VAFlH2dsE1cGLl2gXk=
+=h+Wi
 -----END PGP SIGNATURE-----

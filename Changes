@@ -1,3 +1,7 @@
+[Changes for 0.02 - 2007-12-28]
+
+* Fix support for Perl 5.005 and 5.004.
+
 [Changes for 0.01 - 2007-12-27]
 
 * Initial release to CPAN of this six-minutes-old hack.

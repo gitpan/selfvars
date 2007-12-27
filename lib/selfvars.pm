@@ -1,20 +1,20 @@
 package selfvars;
 use 5.004;
 use strict;
+use vars qw( @ISA @EXPORT $VERSION $self @args );
 use Exporter ();
-use base 'Exporter';
-use vars qw( @EXPORT $VERSION $self @args );
 
 BEGIN {
+    @ISA     = 'Exporter';
     @EXPORT  = qw( $self @args );
-    $VERSION = '0.01';
+    $VERSION = '0.02';
 }
 
 package selfvars::self;
 
 sub TIESCALAR {
     my $x;
-    bless \$x => shift;
+    bless \$x => $_[0];
 }
 
 sub FETCH {
@@ -28,7 +28,7 @@ sub FETCH {
         };
         $level++;
     }
-    return $DB::args[0];
+    $DB::args[0];
 }
 
 sub STORE {
@@ -43,7 +43,7 @@ BEGIN { @ISA = 'Tie::Array' }
 
 sub _args {
     my $level = 2;
-    my @c     = ();
+    my @c;
     while ( !defined( $c[3] ) || $c[3] eq '(eval)' ) {
         @c = do {
             package DB;
@@ -55,18 +55,18 @@ sub _args {
     \@DB::args;
 }
 
-sub TIEARRAY  { my $x; bless \$x, $_[0] }
+sub TIEARRAY  { my $x; bless \$x => $_[0] }
 sub FETCHSIZE { scalar $#{ _args() } }
 sub STORESIZE { $#{ _args() } = $_[1] + 1 }
 sub STORE     { _args()->[ $_[1] + 1 ] = $_[2] }
 sub FETCH     { _args()->[ $_[1] + 1 ] }
 sub CLEAR     { $#{ _args() } = 0 }
-sub POP       { my $o = _args(); return if @$o <= 1; pop(@$o) }
+sub POP       { my $o = _args(); (@$o > 1) ? pop(@$o) : undef }
 sub PUSH      { my $o = _args(); push( @$o, @_ ) }
 sub SHIFT     { splice( @{ _args() }, 1, 1 ) }
 sub UNSHIFT   { my $o = _args(); unshift( @$o, @_ ) }
-sub EXISTS    { exists _args()->[ $_[1] + 1 ] }
-sub DELETE    { delete _args()->[ $_[1] + 1 ] }
+sub EXISTS    { my $o = _args(); exists $o->[ $_[1] + 1 ] }
+sub DELETE    { my $o = _args(); delete $o->[ $_[1] + 1 ] }
 
 sub SPLICE {
     my $ob  = shift;
@@ -74,7 +74,7 @@ sub SPLICE {
     my $off = @_ ? shift : 0;
     $off += $sz if $off < 0;
     my $len = @_ ? shift : $sz - $off;
-    return splice( @$ob, $off + 1, $len, @_ );
+    splice( @$ob, $off + 1, $len, @_ );
 }
 
 package selfvars;
@@ -145,6 +145,16 @@ Return the argument list.
 
 None.
 
+=head1 ACKNOWLEDGEMENTS 
+
+This module was inspired and based on Kang-min Liu (gugod)'s C<self.pm>.
+
+As seen on #perl:
+
+    <gugod> audreyt: selfvars.pm looks exactly like what I want self.pm to be in the beginning
+    <gugod> audreyt: but I can't sort out the last BEGIN{} block like you did.
+    <gugod> audreyt: that's a great job :D
+
 =head1 SEE ALSO
 
 L<self>
@@ -152,8 +162,6 @@ L<self>
 =head1 AUTHORS
 
 Audrey Tang E<lt>cpan@audreyt.orgE<gt>
-
-Inspired and based on Kang-min Liu's C<self.pm>.
 
 =head1 COPYRIGHT
 
