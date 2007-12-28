@@ -7,7 +7,7 @@ use Exporter ();
 BEGIN {
     @ISA     = 'Exporter';
     @EXPORT  = qw( $self @args );
-    $VERSION = '0.03';
+    $VERSION = '0.04';
 }
 
 package selfvars::self;
@@ -60,55 +60,55 @@ sub FETCHSIZE { scalar $#{ _args() } }
 sub STORESIZE {
     require Carp;
     Carp::croak('Modification of a read-only @args attempted');
-    $#{ _args() } = $_[1] + 1;
+    # $#{ _args() } = $_[1] + 1;
 }
 sub STORE     { _args()->[ $_[1] + 1 ] = $_[2] }
 sub FETCH     { _args()->[ $_[1] + 1 ] }
 sub CLEAR     {
     require Carp;
     Carp::croak('Modification of a read-only @args attempted');
-    $#{ _args() } = 0
+    # $#{ _args() } = 0;
 }
 sub POP       {
     require Carp;
     Carp::croak('Modification of a read-only @args attempted');
-    my $o = _args(); (@$o > 1) ? pop(@$o) : undef
+    # my $o = _args(); (@$o > 1) ? pop(@$o) : undef
 }
 sub PUSH      {
     require Carp;
     Carp::croak('Modification of a read-only @args attempted');
-    my $o = _args(); push( @$o, @_ )
+    # my $o = _args(); push( @$o, @_ )
 }
 sub SHIFT     {
     require Carp;
     Carp::croak('Modification of a read-only @args attempted');
-    my $o = _args(); splice( @$o, 1, 1 )
+    # my $o = _args(); splice( @$o, 1, 1 )
 }
 sub UNSHIFT   {
     require Carp;
     Carp::croak('Modification of a read-only @args attempted');
-    my $o = _args(); unshift( @$o, @_ )
+    # my $o = _args(); unshift( @$o, @_ )
 }
 sub EXISTS    {
     require Carp;
     Carp::croak('Modification of a read-only @args attempted');
-    my $o = _args(); exists $o->[ $_[1] + 1 ]
+    # my $o = _args(); exists $o->[ $_[1] + 1 ]
 }
 sub DELETE    {
     require Carp;
     Carp::croak('Modification of a read-only @args attempted');
-    my $o = _args(); delete $o->[ $_[1] + 1 ]
+    # my $o = _args(); delete $o->[ $_[1] + 1 ]
 }
 
 sub SPLICE {
     require Carp;
     Carp::croak('Modification of a read-only @args attempted');
-    my $ob  = shift;
-    my $sz  = $ob->FETCHSIZE;
-    my $off = @_ ? shift : 0;
-    $off += $sz if $off < 0;
-    my $len = @_ ? shift : $sz - $off;
-    splice( @$ob, $off + 1, $len, @_ );
+    # my $ob  = shift;
+    # my $sz  = $ob->FETCHSIZE;
+    # my $off = @_ ? shift : 0;
+    # $off += $sz if $off < 0;
+    # my $len = @_ ? shift : $sz - $off;
+    # splice( @$ob, $off + 1, $len, @_ );
 }
 
 package selfvars;
