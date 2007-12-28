@@ -1,13 +1,30 @@
 package selfvars;
 use 5.004;
 use strict;
-use vars qw( @ISA @EXPORT $VERSION $self @args );
-use Exporter ();
+use vars qw( $VERSION $self @args );
 
 BEGIN {
-    @ISA     = 'Exporter';
-    @EXPORT  = qw( $self @args );
-    $VERSION = '0.04';
+    $VERSION = '0.05';
+}
+
+sub import {
+    my $class = shift; # Heh, the irony.
+
+    # Avoid 'odd numbers of values in hash assignment' warnings.
+    push @_, undef if @_ % 2;
+
+    my %opts = (@_ ? @_ : (-self => undef, -args => undef));
+    my $pkg  = caller;
+
+    no strict 'refs';
+    if (exists $opts{'-self'}) {
+        $opts{'-self'} = 'self' unless defined $opts{'-self'};
+        *{"$pkg\::$opts{'-self'}"} = \$self;
+    }
+    if (exists $opts{'-args'}) {
+        $opts{'-args'} = 'args' unless defined $opts{'-args'};
+        *{"$pkg\::$opts{'-args'}"} = \@args;
+    }
 }
 
 package selfvars::self;
@@ -128,20 +145,25 @@ selfvars - Provide $self and @args variables for OO programs
 
 =head1 SYNOPSIS
 
-    package MyModule;
+    package MyClass;
+
+    ### Import $self and @args into your package:
     use selfvars;
 
-    # Write constructor as usual.
+    ### Or name the variables explicitly:
+    # use selfvars -self => 'self', -args => 'args';
+
+    ### Write the constructor as usual:
     sub new {
         return bless({}, shift);
     }
 
-    # Use $self in place of $_[0].
+    ### Use $self in place of $_[0]:
     sub foo {
         $self->{foo};
     }
 
-    # Use @args in place of @_[1..$#_].
+    ### Use @args in place of @_[1..$#_]:
     sub set {
         my ($foo, $bar) = @args;
         $self->{foo} = $foo;
@@ -181,6 +203,27 @@ Return the current object.
 Return the argument list.
 
 =back
+
+=head2 Choosing non-default names 
+
+You can choose alternative variable names with explicit import arguments:
+
+    # Use $this and @opts instead of $self and @args:
+    use selfvars -self => 'this', -args => 'opts';
+
+    # Use $this but leave @args alone:
+    use selfvars -self => 'this', -args;
+
+    # Use @opts but leave $self alone:
+    use selfvars -args => 'opts', -self;
+
+You may also omit a variable name from the explicit import arguments:
+
+    # Import $self but not @args:
+    use selfvars -self => 'self';
+
+    # Same as the above:
+    use selfvars -self;
 
 =head1 DEPENDENCIES
 

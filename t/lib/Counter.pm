@@ -1,7 +1,7 @@
 use strict;
 
 package Counter;
-use selfvars;
+use selfvars -self => 'this', -args => 'opts';
 
 sub new {
     my $class = shift;
@@ -9,16 +9,16 @@ sub new {
 }
 
 sub set {
-    my ($v) = @args;
-    $self->{v} = $v;
+    my ($v) = @opts;
+    $this->{v} = $v;
 }
 
 sub out {
-    $self->{v};
+    $this->{v};
 }
 
 sub inc {
-    $self->{v}++;
+    $this->{v}++;
 }
 
 package ChildofCounter;

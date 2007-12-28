@@ -24,7 +24,6 @@ t/0simple.t
 t/lib/Counter.pm
 t/lib/EvalTest.pm
 t/lib/InterpolationTest.pm
-t/perlcritic.t
 t/pod-coverage.t
 t/pod.t
 SIGNATURE                                Public-key signature (added by MakeMaker)
