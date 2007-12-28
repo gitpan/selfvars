@@ -4,11 +4,11 @@ use strict;
 use vars qw( $VERSION $self @args );
 
 BEGIN {
-    $VERSION = '0.05';
+    $VERSION = '0.06';
 }
 
 sub import {
-    my $class = shift; # Heh, the irony.
+    my $class = shift; # The irony!
 
     # Avoid 'odd numbers of values in hash assignment' warnings.
     push @_, undef if @_ % 2;

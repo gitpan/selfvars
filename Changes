@@ -1,6 +1,12 @@
+[Changes for 0.06 - 2007-12-29]
+
+* Minor test suite fixes for Perl 5.004/5.005 compatibility.
+
 [Changes for 0.05 - 2007-12-28]
 
-* 
+* You can now choose alternate names for $self and @args:
+
+    use selfvars -self => 'this', -args => 'opts';
 
 [Changes for 0.04 - 2007-12-28]
 

@@ -14,11 +14,11 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 aa98e88f0567719ad6579c1f8fd346ab534281cd Changes
+SHA1 1b8cb5b6454a3684069aae9d74907cdf32e62dad Changes
 SHA1 f8b188962fab254734e15a5c034c8db98a9e8904 MANIFEST
-SHA1 e539ee7b9640a4fb7b8b17eebfecec09e7f4caa0 META.yml
+SHA1 230e3736b71528750939cc01f2f5a800971fad01 META.yml
 SHA1 694587dac73dda066bc81b5a61e01705b6bd3ceb Makefile.PL
-SHA1 456a85ce075dfacd6163d24feafb5bc8f49b60e5 README
+SHA1 2d24a894266f93c1960e927c5309aa13ce8c3fc8 README
 SHA1 7e2cfa1b9efe0d502ee57717649c90ba4bd28ba9 inc/Module/Install.pm
 SHA1 6e1392d80a0f239eecd5664f7f21f922cedb9329 inc/Module/Install/Base.pm
 SHA1 f69417fe831d9cc22a78f00a617afadceade4d81 inc/Module/Install/Can.pm
@@ -32,10 +32,10 @@ SHA1 fb711fed1e4269f7569da5d09980648acf47a750 inc/Test/Builder.pm
 SHA1 028954a5cb377df3f660a7ade8631c265df026cc inc/Test/Builder/Module.pm
 SHA1 0781d008b60551d1bd74d56bf065861f4d84cf9d inc/Test/More.pm
 SHA1 f8e70396a1f3e0b34668d08871d7519321995283 inc/attributes.pm
-SHA1 74d3c73152c8b88db663a36ce33fd9f0bb576396 lib/selfvars.pm
+SHA1 712988d0a71916ba9bea5e7fa9cf42cc9a38679f lib/selfvars.pm
 SHA1 0a009773bc5c2f8f81dcbb1c8bcf2cca9f6152d3 t/00.load.t
-SHA1 dd50bad5324e0b5b4806dbc804c444dbc37c6b6a t/02.eval.t
-SHA1 cc6a5219783ccb4a4c90d91474914f83cdf342f8 t/03.interpolation.t
+SHA1 ab8c116da1a50c724d125fbcff4256462d7fbc5a t/02.eval.t
+SHA1 ff0fe16fa198bcc80ec539950a745a0f7778e968 t/03.interpolation.t
 SHA1 d5abf75efeacb1378146e6889c6dbe6e6c52e677 t/0simple.t
 SHA1 6c51e41fb80ced12a9a38d4e152abf4783a8f702 t/lib/Counter.pm
 SHA1 0e285ae3f19170f18b8ff5215d266539a7500c5f t/lib/EvalTest.pm
@@ -45,7 +45,7 @@ SHA1 0190346d7072d458c8a10a45c19f86db641dcc48 t/pod.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.3 (Darwin)
 
-iD8DBQFHdOmttLPdNzw1AaARAq7SAKCu/sgTclJlnU6QEr4YqlENJMme5ACglOQm
-dz6j7G/V1l9qoAkky1OWjkk=
-=sop7
+iD8DBQFHdXlJtLPdNzw1AaARAgvMAJkBtHV9PK+jlKHbRHSFDnSnLCEriwCeLRDY
+Ji/j2twGv4/s3NDG0cWRVhA=
+=Od+g
 -----END PGP SIGNATURE-----

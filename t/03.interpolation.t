@@ -8,5 +8,5 @@ my $t = InterpolationTest->new;
 
 for (1 .. 2) {
     my $m = "test_$_";
-    is($t->$m, "hello");
+    is(eval "\$t->$m", "hello");
 }

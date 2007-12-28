@@ -12,5 +12,5 @@ for (2 .. 8) {
     my $o = EvalTest->new;
     my $m = "out$_";
     $o->in($_);
-    is($o->$m, $_);
+    is(eval "\$o->$m", $_);
 }

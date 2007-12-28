@@ -2,20 +2,25 @@ NAME
     selfvars - Provide $self and @args variables for OO programs
 
 SYNOPSIS
-        package MyModule;
+        package MyClass;
+
+        ### Import $self and @args into your package:
         use selfvars;
 
-        # Write constructor as usual.
+        ### Or name the variables explicitly:
+        # use selfvars -self => 'self', -args => 'args';
+
+        ### Write the constructor as usual:
         sub new {
             return bless({}, shift);
         }
 
-        # Use $self in place of $_[0].
+        ### Use $self in place of $_[0]:
         sub foo {
             $self->{foo};
         }
 
-        # Use @args in place of @_[1..$#_].
+        ### Use @args in place of @_[1..$#_]:
         sub set {
             my ($foo, $bar) = @args;
             $self->{foo} = $foo;
@@ -30,9 +35,16 @@ DESCRIPTION
         my $self = shift;
 
     Behind the scenes, $self is simply tied to $_[0], and @args to
-    @_[1..$#_].
+    @_[1..$#_]. Note that they are variables, not barewords.
 
-    Note that they are variables, not barewords.
+    Currently, both $self and @args are read-only; this means you cannot
+    mutate them:
+
+        $self = 'foo';              # error
+        my $foo = shift @args;      # error
+
+    This restriction may be lifted at a later version of this module, or
+    turned into a configurable option instead.
 
 INTERFACE
     $self
@@ -41,16 +53,44 @@ INTERFACE
     @args
         Return the argument list.
 
+  Choosing non-default names
+    You can choose alternative variable names with explicit import
+    arguments:
+
+        # Use $this and @opts instead of $self and @args:
+        use selfvars -self => 'this', -args => 'opts';
+
+        # Use $this but leave @args alone:
+        use selfvars -self => 'this', -args;
+
+        # Use @opts but leave $self alone:
+        use selfvars -args => 'opts', -self;
+
+    You may also omit a variable name from the explicit import arguments:
+
+        # Import $self but not @args:
+        use selfvars -self => 'self';
+
+        # Same as the above:
+        use selfvars -self;
+
 DEPENDENCIES
     None.
+
+ACKNOWLEDGEMENTS
+    This module was inspired and based on Kang-min Liu (gugod)'s "self.pm".
+
+    As seen on #perl:
+
+        <gugod> audreyt: selfvars.pm looks exactly like what I want self.pm to be in the beginning
+        <gugod> audreyt: but I can't sort out the last BEGIN{} block like you did.
+        <gugod> audreyt: that's a great job :D
 
 SEE ALSO
     self
 
 AUTHORS
     Audrey Tang <cpan@audreyt.org>
-
-    Inspired and based on Kang-min Liu's "self.pm".
 
 COPYRIGHT
     Copyright 2007 by Audrey Tang <cpan@audreyt.org>.
