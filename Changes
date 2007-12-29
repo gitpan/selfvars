@@ -1,3 +1,21 @@
+[Changes for 0.10 - 2007-12-29]
+
+* Add support for %opts, an alias for named arguments in %{$_[1]}:
+
+    package Foo;
+    use selfvars;
+    sub meth {
+        $self->{x} = $opts{x};
+    }
+
+    # Call it like this:
+    $foo->meth({x => 4});
+
+* Support for omitting the "undef" part in selective imports:
+
+    # Import $self and %opts but not @args
+    use selfvars -self, -opts;
+
 [Changes for 0.06 - 2007-12-29]
 
 * Minor test suite fixes for Perl 5.004/5.005 compatibility.
@@ -6,7 +24,7 @@
 
 * You can now choose alternate names for $self and @args:
 
-    use selfvars -self => 'this', -args => 'opts';
+    use selfvars -self => 'this', -args => 'vars';
 
 [Changes for 0.04 - 2007-12-28]
 

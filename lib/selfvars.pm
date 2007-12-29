@@ -1,29 +1,40 @@
 package selfvars;
 use 5.004;
 use strict;
-use vars qw( $VERSION $self @args );
+use vars qw( $VERSION $self @args %opts );
 
 BEGIN {
-    $VERSION = '0.06';
+    $VERSION = '0.10';
 }
 
 sub import {
-    my $class = shift; # The irony!
+    my $class = shift; # Oooh, the irony!
+    my %vars  = (-self => undef, -args => undef, -opts => undef) unless @_;
 
-    # Avoid 'odd numbers of values in hash assignment' warnings.
-    push @_, undef if @_ % 2;
+    while (@_) {
+        my $key = shift;
+        if (@_ and $_[0] !~ /^-/) {
+            $vars{$key} = shift;
+        }
+        else {
+            $vars{$key} = undef;
+        }
+    }
 
-    my %opts = (@_ ? @_ : (-self => undef, -args => undef));
-    my $pkg  = caller;
+    my $pkg = caller;
 
     no strict 'refs';
-    if (exists $opts{'-self'}) {
-        $opts{'-self'} = 'self' unless defined $opts{'-self'};
-        *{"$pkg\::$opts{'-self'}"} = \$self;
+    if (exists $vars{'-self'}) {
+        $vars{'-self'} = 'self' unless defined $vars{'-self'};
+        *{"$pkg\::$vars{'-self'}"} = \$self;
     }
-    if (exists $opts{'-args'}) {
-        $opts{'-args'} = 'args' unless defined $opts{'-args'};
-        *{"$pkg\::$opts{'-args'}"} = \@args;
+    if (exists $vars{'-args'}) {
+        $vars{'-args'} = 'args' unless defined $vars{'-args'};
+        *{"$pkg\::$vars{'-args'}"} = \@args;
+    }
+    if (exists $vars{'-opts'}) {
+        $vars{'-opts'} = 'opts' unless defined $vars{'-opts'};
+        *{"$pkg\::$vars{'-opts'}"} = \%opts;
     }
 }
 
@@ -106,11 +117,16 @@ sub UNSHIFT   {
     Carp::croak('Modification of a read-only @args attempted');
     # my $o = _args(); unshift( @$o, @_ )
 }
-sub EXISTS    {
-    require Carp;
-    Carp::croak('Modification of a read-only @args attempted');
-    # my $o = _args(); exists $o->[ $_[1] + 1 ]
+
+BEGIN {
+    local $@;
+    eval q{
+        sub EXISTS    {
+            my $o = _args(); exists $o->[ $_[1] + 1 ]
+        }
+    } if $] >= 5.006;
 }
+
 sub DELETE    {
     require Carp;
     Carp::croak('Modification of a read-only @args attempted');
@@ -128,11 +144,38 @@ sub SPLICE {
     # splice( @$ob, $off + 1, $len, @_ );
 }
 
+package selfvars::opts;
+
+sub _opts {
+    my $level = 2;
+    my @c;
+    while ( !defined( $c[3] ) || $c[3] eq '(eval)' ) {
+        @c = do {
+            package DB;
+            @DB::args = ();
+            caller($level);
+        };
+        $level++;
+    }
+    $DB::args[1];
+}
+
+sub TIEHASH  { my $x; bless \$x => $_[0] }
+sub FETCH    { _opts()->{ $_[1] } }
+sub STORE    { _opts()->{ $_[1] } = $_[2] }
+sub FIRSTKEY { my $o = _opts(); my $a = scalar keys %$o; each %$o }
+sub NEXTKEY  { my $o = _opts(); each %$o }
+sub EXISTS   { my $o = _opts(); exists $o->{$_[1]} }
+sub DELETE   { my $o = _opts(); delete $o->{$_[1]} }
+sub CLEAR    { my $o = _opts(); %$o = () }
+sub SCALAR   { my $o = _opts(); scalar %$o }
+
 package selfvars;
 
 BEGIN {
     tie $self => __PACKAGE__ . '::self';
     tie @args => __PACKAGE__ . '::args';
+    tie %opts => __PACKAGE__ . '::opts';
 }
 
 1;
@@ -147,11 +190,11 @@ selfvars - Provide $self and @args variables for OO programs
 
     package MyClass;
 
-    ### Import $self and @args into your package:
+    ### Import $self, @args and %opts into your package:
     use selfvars;
 
     ### Or name the variables explicitly:
-    # use selfvars -self => 'self', -args => 'args';
+    # use selfvars -self => 'self', -args => 'args', -opts => 'opts';
 
     ### Write the constructor as usual:
     sub new {
@@ -164,22 +207,28 @@ selfvars - Provide $self and @args variables for OO programs
     }
 
     ### Use @args in place of @_[1..$#_]:
-    sub set {
+    sub bar {
         my ($foo, $bar) = @args;
         $self->{foo} = $foo;
         $self->{bar} = $bar;
     }
 
+    ### Use %opts in place of %{$_[1]}:
+    sub baz {
+        $self->{x} = $opts{x};
+        $self->{y} = $opts{y};
+    }
+
 =head1 DESCRIPTION
 
-This moudles adds C<$self> and C<@args> keywords to your Perl OO module.
+This moudles exports three special variables: C<$self>, C<@args> and C<%opts>.
 
 They are really just handy helpers to get rid of:
 
     my $self = shift;
 
-Behind the scenes, C<$self> is simply tied to C<$_[0]>, and C<@args> to
-C<@_[1..$#_]>.  Note that they are variables, not barewords.
+Behind the scenes, C<$self> is simply tied to C<$_[0]>, C<@args> to
+C<@_[1..$#_]>, and C<%opts> to C<%{$_[0]}>.
 
 Currently, both C<$self> and C<@args> are read-only; this means you cannot
 mutate them:
@@ -190,17 +239,26 @@ mutate them:
 This restriction may be lifted at a later version of this module, or turned
 into a configurable option instead.
 
+However, C<%opts> is not read-only, and can be mutated freely:
+
+    $opts{x} = 'y';             # okay
+    delete $opts{x};            # also okay
+
 =head1 INTERFACE
 
 =over 4
 
 =item $self
 
-Return the current object.
+Returns the current object.
 
 =item @args
 
-Return the argument list.
+Returns the argument list.
+
+=item %opts
+
+Returns the first argument, which must be a hash reference, as a hash.
 
 =back
 
@@ -208,22 +266,25 @@ Return the argument list.
 
 You can choose alternative variable names with explicit import arguments:
 
-    # Use $this and @opts instead of $self and @args:
-    use selfvars -self => 'this', -args => 'opts';
+    # Use $this and @vars instead of $self and @args, leaving %opts alone:
+    use selfvars -self => 'this', -args => 'vars', -opts;
 
-    # Use $this but leave @args alone:
-    use selfvars -self => 'this', -args;
+    # Use $this but leave @args and %opts alone:
+    use selfvars -self => 'this', -args, -opts;
 
-    # Use @opts but leave $self alone:
-    use selfvars -args => 'opts', -self;
+    # Use @vars but leave $self and %opts alone:
+    use selfvars -args => 'vars', -self, -opts;
 
 You may also omit a variable name from the explicit import arguments:
 
-    # Import $self but not @args:
+    # Import $self but not @args nor %opts:
     use selfvars -self => 'self';
 
     # Same as the above:
     use selfvars -self;
+
+    # Import $self and %opts but not @args:
+    use selfvars -self, -opts;
 
 =head1 DEPENDENCIES
 

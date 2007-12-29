@@ -1,7 +1,7 @@
 
 use lib 't/lib';
 use Counter;
-use Test::More tests => 9;
+use Test::More tests => 10;
 
 {
     my $o = Counter->new;
@@ -12,6 +12,10 @@ use Test::More tests => 9;
     $o->set(5);
 
     is($o->out, 5);
+
+    $o->set_named({ v => 7 });
+
+    is($o->out, 7);
 }
 
 {

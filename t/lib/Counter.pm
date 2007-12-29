@@ -1,7 +1,7 @@
 use strict;
 
 package Counter;
-use selfvars -self => 'this', -args => 'opts';
+use selfvars -self => 'this', -args => 'vars', -opts => 'vars';
 
 sub new {
     my $class = shift;
@@ -9,8 +9,12 @@ sub new {
 }
 
 sub set {
-    my ($v) = @opts;
+    my ($v) = @vars;
     $this->{v} = $v;
+}
+
+sub set_named {
+    $this->{v} = $vars{v};
 }
 
 sub out {
