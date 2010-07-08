@@ -1,20 +1,22 @@
---- 
-abstract: Provide $self and @args variables for OO programs
-author: 
-  - Audrey Tang <cpan@audreyt.org>
-build_requires: 
-  Test::More: 0
+---
+abstract: 'Provide $self and @args variables for OO programs'
+author:
+  - '唐鳳 <cpan@audreyt.org>'
+build_requires:
+  ExtUtils::MakeMaker: 6.42
+configure_requires:
+  ExtUtils::MakeMaker: 6.42
 distribution_type: module
-generated_by: Module::Install version 0.68
-license: mit
-meta-spec: 
-  url: http://module-build.sourceforge.net/META-spec-v1.3.html
-  version: 1.3
+generated_by: 'Module::Install version 1.00'
+license: cc0
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
 name: selfvars
-no_index: 
-  directory: 
+no_index:
+  directory:
     - inc
     - t
-requires: 
-  perl: 5.004
-version: 0.10
+requires:
+  perl: 5.005
+version: 0.11

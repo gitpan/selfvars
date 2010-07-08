@@ -1,10 +1,10 @@
 package selfvars;
-use 5.004;
+use 5.005;
 use strict;
 use vars qw( $VERSION $self @args %opts );
 
 BEGIN {
-    $VERSION = '0.10';
+    $VERSION = '0.11';
 }
 
 sub import {
@@ -228,7 +228,7 @@ They are really just handy helpers to get rid of:
     my $self = shift;
 
 Behind the scenes, C<$self> is simply tied to C<$_[0]>, C<@args> to
-C<@_[1..$#_]>, and C<%opts> to C<%{$_[0]}>.
+C<@_[1..$#_]>, and C<%opts> to C<%{$_[1]}>.
 
 Currently, both C<$self> and C<@args> are read-only; this means you cannot
 mutate them:
@@ -306,32 +306,15 @@ L<self>
 
 =head1 AUTHORS
 
-Audrey Tang E<lt>cpan@audreyt.orgE<gt>
+唐鳳 E<lt>cpan@audreyt.orgE<gt>
 
-=head1 COPYRIGHT
+=head1 CC0 1.0 Universal
 
-Copyright 2007 by Audrey Tang E<lt>cpan@audreyt.orgE<gt>.
+To the extent possible under law, 唐鳳 has waived all copyright and related
+or neighboring rights to selfvars.
 
-This software is released under the MIT license cited below.
+This work is published from Taiwan.
 
-=head2 The "MIT" License
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
+L<http://creativecommons.org/publicdomain/zero/1.0>
 
 =cut

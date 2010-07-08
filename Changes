@@ -1,3 +1,15 @@
+[Changes for 0.11 - 2010-07-09]
+
+* LICENSING CHANGE: This compilation and all individual files in it
+  are now under the nullary CC0 1.0 Universal terms:
+
+  To the extent possible under law, 唐鳳 has waived all copyright and
+  related or neighboring rights to selfvars.
+
+* Documentation fix: %opt stands for %{$_[1]}, not %{$_[0]}. (Luke Closs)
+
+* Update minimum Perl version from 5.004 to 5.005 as required by Module::Install.
+
 [Changes for 0.10 - 2007-12-29]
 
 * Add support for %opts, an alias for named arguments in %{$_[1]}:
