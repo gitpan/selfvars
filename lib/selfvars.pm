@@ -4,7 +4,7 @@ use strict;
 use vars qw( $VERSION $self @args %opts %hopts );
 
 BEGIN {
-    $VERSION = '0.21';
+    $VERSION = '0.22';
 }
 
 sub import {
@@ -175,6 +175,8 @@ BEGIN {
 1;
 
 __END__
+
+=encoding utf8
 
 =head1 NAME
 
