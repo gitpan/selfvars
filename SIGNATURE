@@ -14,39 +14,42 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 f2989f096cc93699720bd96eaff0be244a5684cb Changes
-SHA1 78f3a8673d40992dec1a6484ab05a91756765f57 MANIFEST
-SHA1 7df0b9807caca3aea186077967f50afcd9ab9f13 META.yml
+SHA1 9cd63ae9c91519f9fc42a63a15fac6b99cf1d82c Changes
+SHA1 3391f8ef83c84d45927a5f03bacdfb52620687fb MANIFEST
+SHA1 23b45083719f1d5477114ac8eb08ed6d5d51a74f META.yml
 SHA1 594ba42533c918b593b80bdbae499d60ff4498fe Makefile.PL
 SHA1 3641a3804dd568bc601924321fbac830af0e06bc README
-SHA1 7305dbe2904416e28decb05396988a5d51d578be inc/Module/Install.pm
-SHA1 129960509127732258570c122042bc48615222e1 inc/Module/Install/Base.pm
-SHA1 cf3356ed9a5bd2f732527ef9e7bc5ef4458c8a93 inc/Module/Install/Can.pm
-SHA1 bf0a3e1977effc2832d7a813a76dce3f31b437b6 inc/Module/Install/Fetch.pm
-SHA1 b501b0df59a5cd235cca473889f82c3d3429f39e inc/Module/Install/Include.pm
-SHA1 b721c93ca5bc9a6aa863b49af15f1b1de6125935 inc/Module/Install/Makefile.pm
-SHA1 026cc0551a0ad399d195e395b46bdf842e115192 inc/Module/Install/Metadata.pm
-SHA1 5457015ea5a50e93465bf2dafa29feebd547f85b inc/Module/Install/Win32.pm
-SHA1 051e7fa8063908befa3440508d0584a2497b97db inc/Module/Install/WriteAll.pm
-SHA1 7964e22a5f17c3661faa75e3c814ef145135f788 inc/PerlIO.pm
-SHA1 f7582b52d18e4b1b1bf24b3b7a29ccbf9a8ef00c inc/Test/Builder.pm
-SHA1 4694604f76a8ed3e7bd049b2339d3a85c0d39de4 inc/Test/Builder/Module.pm
-SHA1 108e94af93b785625dde019b4191774f33ceea13 inc/Test/More.pm
-SHA1 b526160f58a03562738f361878a6e65e3d79796a inc/parent.pm
-SHA1 7ed2ee74f5f23408174baab05858e0552e94ce60 lib/selfvars.pm
+SHA1 7b4ae50ebac72d20761171c4c2b50c206344ea40 inc/Module/Install.pm
+SHA1 d9fe55a427fe2fd75b5029afeeaa61b592e07f79 inc/Module/Install/Base.pm
+SHA1 62d3922826d9f89f20c185e7031ac8f028504745 inc/Module/Install/Can.pm
+SHA1 dc809f64fb70a26b069a36f8d3d353d520dbb7e1 inc/Module/Install/Fetch.pm
+SHA1 d859f2d8048708f16b5fd92f54c988a3c4c1ae30 inc/Module/Install/Include.pm
+SHA1 73ab91490a628452cc140db72ef9d13a1326d211 inc/Module/Install/Makefile.pm
+SHA1 8ce3f2b414e4617e6233dd4ba10830f8c5d672ec inc/Module/Install/Metadata.pm
+SHA1 3b0acd2eeac93a0afe48120f5648f0db362e5bbf inc/Module/Install/Win32.pm
+SHA1 f08924f051e623f8e09fa6a121993c4a9cf7d9eb inc/Module/Install/WriteAll.pm
+SHA1 3105d53e4577a627f2419cad91980108b3424663 inc/PerlIO.pm
+SHA1 723280c9469e12f8aaf843c068084cdb83fc5a48 inc/Test/Builder.pm
+SHA1 0038268e145fc79604a43f0fab63c08ac95bdf80 inc/Test/Builder/Module.pm
+SHA1 25c57515e67aa6ad722d245cc3aa0a9056c9f6bb inc/Test/More.pm
+SHA1 dc0387143a4d1f5d006e552b223bc8ff88f45408 inc/parent.pm
+SHA1 7c132ad03b95cedb2970ef7210be6d3190ca9b38 lib/selfvars.pm
+SHA1 aef3fdde2ecfc3cf6fca2f7522316d2169ddc403 lib/selfvars/autoload.pm
 SHA1 0a009773bc5c2f8f81dcbb1c8bcf2cca9f6152d3 t/00.load.t
 SHA1 ab8c116da1a50c724d125fbcff4256462d7fbc5a t/02.eval.t
 SHA1 ff0fe16fa198bcc80ec539950a745a0f7778e968 t/03.interpolation.t
+SHA1 8ece6c50785d69f694babbd2f76f878fb1b7b5a9 t/0hopts.t
 SHA1 1f260d2c1bd620d8a2e7bef44fe3b07596a920df t/0simple.t
 SHA1 cc279ceef70c09e92030c5eec0665b08c051bccc t/lib/Counter.pm
 SHA1 0e285ae3f19170f18b8ff5215d266539a7500c5f t/lib/EvalTest.pm
+SHA1 23130451317eb45a51dba1e0145e4584c3c3cf5f t/lib/HOpts.pm
 SHA1 84f3c334898c7c73a5988bedab38fad616f8b477 t/lib/InterpolationTest.pm
 SHA1 83fc3f0010fd3d13dbb1e6916a0091b3e8bea969 t/pod-coverage.t
 SHA1 0190346d7072d458c8a10a45c19f86db641dcc48 t/pod.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.10 (Darwin)
 
-iEYEARECAAYFAk0HNvsACgkQtLPdNzw1AaDBlwCfby5stCAVGR8vEVtbW/W0OYuC
-+LcAoL2HzrCgGGtmlZGYJoDRinoQcEx8
-=ZV32
+iEYEARECAAYFAk3efjQACgkQtLPdNzw1AaCc+gCZAWEwzkHoBPODB9G35NWe2XPx
+sywAnRwqa3h3jTcDHiS8WVw06qRS51ng
+=aVD8
 -----END PGP SIGNATURE-----
