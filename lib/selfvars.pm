@@ -4,7 +4,7 @@ use strict;
 use vars qw( $VERSION $self @args %opts %hopts );
 
 BEGIN {
-    $VERSION = '0.30';
+    $VERSION = '0.31';
 }
 
 sub import {
