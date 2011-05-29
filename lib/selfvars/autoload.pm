@@ -6,12 +6,12 @@ use selfvars ();
 sub import {
     no strict 'refs';
     my $pkg = caller;
-    *{"$pkg\::AUTOLOAD"} = \&autoload;
+    *{"$pkg\::AUTOLOAD"} = \&_autoload;
     shift; unshift @_, 'selfvars';
     goto &selfvars::import;
 }
 
-sub autoload {
+sub _autoload {
     no strict 'vars';
     my $method = $AUTOLOAD;
 
@@ -45,7 +45,7 @@ selfvars::autoload - Turn missing_sub(...) into $_[0]->missing_sub(...) implicit
 
 =head1 SYNOPSIS
 
-    use Mojolicious::Lite; # The raison d'etre for this module...
+    use Mojolicious::Lite; # The raison d'être for this module...
 
     # Import $self, @args, %opts and %hopts into your package;
     # see "perldoc selfvars" for import options and usage.
@@ -79,7 +79,7 @@ In addition to that, this module sets up an C<AUTOLOAD> subroutine in the import
 package, so any calls to missing functions becomes a method call with C<$_[0]> as
 the invocant.
 
-If C<$_[0]> is not present, then we ranse an C<Undefined subroutine> exception as usual.
+If C<$_[0]> is not present, then we raise an C<Undefined subroutine> exception as usual.
 
 The net effect is that we can start writing Mojolicious apps with Dancer syntax. :-)
 
